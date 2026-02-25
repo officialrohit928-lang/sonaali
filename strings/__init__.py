@@ -6,7 +6,6 @@ import yaml
 languages = {}
 languages_present = {}
 
-
 def get_string(lang: str):
     return languages[lang]
 

@@ -1,10 +1,11 @@
-FROM nikolaik/python-nodejs:python3.11-nodejs19
+FROM nikolaik/python-nodejs:python3.10-nodejs18-bullseye
 
-RUN rm -f /etc/apt/sources.list.d/yarn.list && \
-    sed -i 's|http://deb.debian.org/debian|http://archive.debian.org/debian|g' /etc/apt/sources.list && \
-    sed -i '/security.debian.org/d' /etc/apt/sources.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends ffmpeg aria2 && \
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    ffmpeg \
+    aria2 \
+    git \
+    curl && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -12,6 +13,6 @@ COPY . /app/
 WORKDIR /app/
 
 RUN python -m pip install --no-cache-dir --upgrade pip
-RUN pip3 install --no-cache-dir --upgrade -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
 
-CMD bash start
+CMD ["bash", "start"]
